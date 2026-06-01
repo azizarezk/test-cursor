@@ -11,9 +11,10 @@
         <nav class="nav-bar" aria-label="Main navigation">
             <a class="brand" asp-page="/Index">ElevatorWeb</a>
             <div class="nav-links">
-                <a href="#fleet">Fleet</a>
-                <a href="#maintenance">Maintenance</a>
-                <a href="#safety">Safety</a>
+                <a asp-page="/Index" asp-fragment="fleet">Fleet</a>
+                <a asp-page="/Index" asp-fragment="maintenance">Maintenance</a>
+                <a asp-page="/Index" asp-fragment="safety">Safety</a>
+                <a asp-page="/Permissions">Users &amp; Permissions</a>
             </div>
         </nav>
     </header>

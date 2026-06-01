@@ -1,6 +1,9 @@
+using ElevatorWeb.Services;
+
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.AddRazorPages();
+builder.Services.AddSingleton<PermissionCatalog>();
 
 var app = builder.Build();
 

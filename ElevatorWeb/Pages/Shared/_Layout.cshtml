@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - ElevatorWeb</title>
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+</head>
+<body>
+    <header class="site-header">
+        <nav class="nav-bar" aria-label="Main navigation">
+            <a class="brand" asp-page="/Index">ElevatorWeb</a>
+            <div class="nav-links">
+                <a href="#fleet">Fleet</a>
+                <a href="#maintenance">Maintenance</a>
+                <a href="#safety">Safety</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        @RenderBody()
+    </main>
+
+    <footer class="site-footer">
+        <p>ElevatorWeb keeps vertical transportation visible, reliable, and ready.</p>
+    </footer>
+</body>
+</html>

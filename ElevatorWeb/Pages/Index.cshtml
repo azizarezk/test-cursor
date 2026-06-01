@@ -1,0 +1,90 @@
+@page
+@model ElevatorWeb.Pages.IndexModel
+@{
+    ViewData["Title"] = "Elevator Operations";
+}
+
+<section class="hero">
+    <div class="hero-content">
+        <p class="eyebrow">Smart vertical transportation</p>
+        <h1>Monitor elevator health, safety, and daily movement from one clear dashboard.</h1>
+        <p class="hero-copy">
+            ElevatorWeb is a sample ASP.NET Core 8 web project focused on keeping cabs moving,
+            inspections visible, and building teams informed.
+        </p>
+        <a class="button" href="#fleet">View fleet status</a>
+    </div>
+    <div class="hero-panel" aria-label="Elevator service summary">
+        <span class="panel-label">Live building view</span>
+        <strong>4 elevators</strong>
+        <p>3 available, 1 in maintenance</p>
+    </div>
+</section>
+
+<section class="section" id="fleet">
+    <div class="section-heading">
+        <p class="eyebrow">Fleet status</p>
+        <h2>Every cab at a glance</h2>
+    </div>
+
+    <div class="elevator-grid">
+        @foreach (var elevator in Model.Elevators)
+        {
+            <article class="elevator-card">
+                <div class="card-header">
+                    <div>
+                        <h3>@elevator.Name</h3>
+                        <p>@elevator.Type elevator</p>
+                    </div>
+                    <span class="status-pill @elevator.StatusClass">@elevator.Status</span>
+                </div>
+                <dl class="details">
+                    <div>
+                        <dt>Current floor</dt>
+                        <dd>@elevator.CurrentFloor</dd>
+                    </div>
+                    <div>
+                        <dt>Capacity</dt>
+                        <dd>@elevator.CapacityPercent%</dd>
+                    </div>
+                </dl>
+                <p class="inspection">@elevator.InspectionSummary</p>
+            </article>
+        }
+    </div>
+</section>
+
+<section class="section metrics" id="maintenance">
+    <div class="section-heading">
+        <p class="eyebrow">Maintenance insights</p>
+        <h2>Service data built for quick decisions</h2>
+    </div>
+
+    <div class="metric-grid">
+        @foreach (var metric in Model.Metrics)
+        {
+            <article class="metric-card">
+                <strong>@metric.Value</strong>
+                <h3>@metric.Label</h3>
+                <p>@metric.Description</p>
+            </article>
+        }
+    </div>
+</section>
+
+<section class="section safety" id="safety">
+    <div>
+        <p class="eyebrow">Safety checklist</p>
+        <h2>Designed around reliable rides</h2>
+        <p>
+            The sample content highlights how an elevator operations site can communicate safety
+            practices to facilities teams, tenants, and visitors.
+        </p>
+    </div>
+    <ul>
+        @foreach (var highlight in Model.SafetyHighlights)
+        {
+            <li>@highlight</li>
+        }
+    </ul>
+</section>

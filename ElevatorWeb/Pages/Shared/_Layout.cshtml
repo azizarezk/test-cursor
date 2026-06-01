@@ -1,30 +1,47 @@
+@{
+    var fullBleed = string.Equals(ViewData["FullBleed"] as string, "true", StringComparison.OrdinalIgnoreCase);
+    var bodyClass = ViewData["BodyClass"] as string;
+    var htmlLang = ViewData["HtmlLang"] as string ?? "en";
+    var htmlDir = ViewData["HtmlDir"] as string ?? "ltr";
+    var dataLang = ViewData["DataLang"] as string ?? htmlLang;
+    var dataTheme = ViewData["DataTheme"] as string ?? "light";
+}
 <!DOCTYPE html>
-<html lang="en">
+<html lang="@htmlLang" dir="@htmlDir" data-theme="@dataTheme" data-lang="@dataLang">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - ElevatorWeb</title>
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    @await RenderSectionAsync("Styles", required: false)
 </head>
-<body>
-    <header class="site-header">
-        <nav class="nav-bar" aria-label="Main navigation">
-            <a class="brand" asp-page="/Index">ElevatorWeb</a>
-            <div class="nav-links">
-                <a asp-page="/Index" asp-fragment="fleet">Fleet</a>
-                <a asp-page="/Index" asp-fragment="maintenance">Maintenance</a>
-                <a asp-page="/Index" asp-fragment="safety">Safety</a>
-                <a asp-page="/Permissions">Users &amp; Permissions</a>
-            </div>
-        </nav>
-    </header>
+<body class="@bodyClass">
+    @if (!fullBleed)
+    {
+        <header class="site-header">
+            <nav class="nav-bar" aria-label="Main navigation">
+                <a class="brand" asp-page="/Index">ElevatorWeb</a>
+                <div class="nav-links">
+                    <a asp-page="/Index" asp-fragment="fleet">Fleet</a>
+                    <a asp-page="/Index" asp-fragment="maintenance">Maintenance</a>
+                    <a asp-page="/Index" asp-fragment="safety">Safety</a>
+                    <a asp-page="/Permissions">Users &amp; Permissions</a>
+                </div>
+            </nav>
+        </header>
+    }
 
     <main>
         @RenderBody()
     </main>
 
-    <footer class="site-footer">
-        <p>ElevatorWeb keeps vertical transportation visible, reliable, and ready.</p>
-    </footer>
+    @if (!fullBleed)
+    {
+        <footer class="site-footer">
+            <p>ElevatorWeb keeps vertical transportation visible, reliable, and ready.</p>
+        </footer>
+    }
+
+    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

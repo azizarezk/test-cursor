@@ -1,90 +1,805 @@
 @page
 @model ElevatorWeb.Pages.IndexModel
 @{
-    ViewData["Title"] = "Elevator Operations";
+    ViewData["Title"] = "LiftPro ERP";
+    ViewData["FullBleed"] = "true";
+    ViewData["BodyClass"] = "liftpro-page";
+    ViewData["HtmlLang"] = "ar";
+    ViewData["HtmlDir"] = "rtl";
+    ViewData["DataLang"] = "ar";
+    ViewData["DataTheme"] = "light";
 }
 
-<section class="hero">
+@section Styles {
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&family=Almarai:wght@300;400;700;800&family=Barlow:ital,wght@0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.rtl.min.css" id="bsLink">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="~/css/liftpro.css" asp-append-version="true" />
+}
+
+<!-- ═══════════════════════════════════════════════════
+     ▌ VIEW: LOGIN
+═══════════════════════════════════════════════════ -->
+<div id="v-login" class="view auth-view active">
+<div class="auth-shell">
+
+  <!-- Hero -->
+  <div class="auth-hero">
+    <div class="hero-grid"></div>
+    <div class="hero-glow-1"></div>
+    <div class="hero-glow-2"></div>
+
+    <!-- Elevator shaft animation -->
+    <div class="elevator-shaft">
+      <div class="shaft-rail shaft-rail-l"></div>
+      <div class="shaft-rail shaft-rail-r"></div>
+      <div class="rope rope-1"></div>
+      <div class="rope rope-2"></div>
+      <div class="elevator-box"><i class="bi bi-building-up"></i></div>
+      <div class="floor-mark floor-mark-1">B4</div>
+      <div class="floor-mark floor-mark-2">B8</div>
+      <div class="floor-mark floor-mark-3">B12</div>
+      <div class="floor-mark floor-mark-4">B20</div>
+      <div class="floor-mark floor-mark-5">G</div>
+    </div>
+
     <div class="hero-content">
-        <p class="eyebrow">Smart vertical transportation</p>
-        <h1>Monitor elevator health, safety, and daily movement from one clear dashboard.</h1>
-        <p class="hero-copy">
-            ElevatorWeb is a sample ASP.NET Core 8 web project focused on keeping cabs moving,
-            inspections visible, and building teams informed.
-        </p>
-        <a class="button" href="#fleet">View fleet status</a>
-    </div>
-    <div class="hero-panel" aria-label="Elevator service summary">
-        <span class="panel-label">Live building view</span>
-        <strong>4 elevators</strong>
-        <p>3 available, 1 in maintenance</p>
-    </div>
-</section>
+      <div class="hero-logo"><i class="bi bi-building-up"></i></div>
+      <div class="hero-brand">ليفت<span>برو</span></div>
+      <div class="hero-tagline" data-ar="نظام إدارة المصاعد الاحترافي المتكامل" data-en="Professional Elevator Management ERP">نظام إدارة المصاعد الاحترافي المتكامل</div>
 
-<section class="section" id="fleet">
-    <div class="section-heading">
-        <p class="eyebrow">Fleet status</p>
-        <h2>Every cab at a glance</h2>
+      <div class="hero-stats">
+        <div class="hero-stat"><div class="hero-stat-val">500+</div><div class="hero-stat-lbl" data-ar="مشروع" data-en="Projects">مشروع</div></div>
+        <div class="hero-stat"><div class="hero-stat-val">99%</div><div class="hero-stat-lbl" data-ar="دقة" data-en="Accuracy">دقة</div></div>
+        <div class="hero-stat"><div class="hero-stat-val">24/7</div><div class="hero-stat-lbl" data-ar="دعم" data-en="Support">دعم</div></div>
+      </div>
+
+      <div class="hero-features">
+        <div class="hero-feat"><i class="bi bi-shield-check"></i><span data-ar="صلاحيات متعددة المستويات وحماية كاملة" data-en="Multi-level permissions & full security">صلاحيات متعددة المستويات وحماية كاملة</span></div>
+        <div class="hero-feat"><i class="bi bi-graph-up-arrow"></i><span data-ar="تقارير وتحليلات لحظية تفاعلية" data-en="Real-time interactive analytics & reports">تقارير وتحليلات لحظية تفاعلية</span></div>
+        <div class="hero-feat"><i class="bi bi-translate"></i><span data-ar="دعم كامل للغتين العربية والإنجليزية" data-en="Full Arabic & English RTL/LTR support">دعم كامل للغتين العربية والإنجليزية</span></div>
+        <div class="hero-feat"><i class="bi bi-phone"></i><span data-ar="تصميم متجاوب لجميع الأجهزة" data-en="Fully responsive for all devices">تصميم متجاوب لجميع الأجهزة</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Form side -->
+  <div class="auth-form-side">
+    <div class="lang-switcher-auth">
+      <button class="lang-pill active" id="lp-ar" onclick="setLang('ar')">عربي</button>
+      <button class="lang-pill" id="lp-en" onclick="setLang('en')">English</button>
     </div>
 
-    <div class="elevator-grid">
-        @foreach (var elevator in Model.Elevators)
-        {
-            <article class="elevator-card">
-                <div class="card-header">
-                    <div>
-                        <h3>@elevator.Name</h3>
-                        <p>@elevator.Type elevator</p>
-                    </div>
-                    <span class="status-pill @elevator.StatusClass">@elevator.Status</span>
+    <div class="auth-form-box">
+      <div class="form-eyebrow"><i class="bi bi-building-up"></i> <span data-ar="ليفت برو ERP" data-en="LiftPro ERP">ليفت برو ERP</span></div>
+      <h1 class="form-h1" data-ar="تسجيل الدخول" data-en="Welcome Back">تسجيل الدخول</h1>
+      <p class="form-sub" data-ar="أدخل بياناتك للوصول إلى لوحة التحكم" data-en="Enter your credentials to access the dashboard">أدخل بياناتك للوصول إلى لوحة التحكم</p>
+
+      <div id="login-alert" style="display:none"></div>
+
+      <form onsubmit="handleLogin(event)" novalidate>
+        <div class="f-group">
+          <label class="f-label" data-ar="البريد الإلكتروني أو اسم المستخدم" data-en="Email or Username">البريد الإلكتروني أو اسم المستخدم</label>
+          <div class="f-wrap">
+            <input class="f-input" type="text" id="l-user" autocomplete="username" placeholder="admin@@liftpro.com">
+            <i class="bi bi-person f-icon"></i>
+          </div>
+        </div>
+
+        <div class="f-group">
+          <label class="f-label" data-ar="كلمة المرور" data-en="Password">كلمة المرور</label>
+          <div class="f-wrap">
+            <input class="f-input" type="password" id="l-pass" autocomplete="current-password" placeholder="••••••••" style="padding-left:44px">
+            <i class="bi bi-lock f-icon"></i>
+            <button type="button" class="f-eye" onclick="togglePwd('l-pass',this)"><i class="bi bi-eye-slash"></i></button>
+          </div>
+        </div>
+
+        <div class="f-meta">
+          <label class="f-check">
+            <input type="checkbox" id="remember">
+            <span class="f-check-lbl" data-ar="تذكرني" data-en="Remember me">تذكرني</span>
+          </label>
+          <span class="f-link" onclick="goView('v-forgot')" data-ar="نسيت كلمة المرور؟" data-en="Forgot password?">نسيت كلمة المرور؟</span>
+        </div>
+
+        <button type="submit" class="btn-submit" id="login-btn">
+          <div class="spin"></div>
+          <span class="btn-txt"><i class="bi bi-box-arrow-in-right"></i> <span data-ar="دخول" data-en="Sign In">دخول</span></span>
+        </button>
+      </form>
+
+      <div class="demo-box">
+        <div class="demo-box-title" data-ar="بيانات تجريبية للعرض:" data-en="Demo credentials:">بيانات تجريبية للعرض:</div>
+        <div><span data-ar="المستخدم:" data-en="User:">المستخدم:</span> <code>admin@@liftpro.com</code></div>
+        <div><span data-ar="كلمة المرور:" data-en="Password:">كلمة المرور:</span> <code>Admin@@123</code></div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     ▌ VIEW: FORGOT PASSWORD
+═══════════════════════════════════════════════════ -->
+<div id="v-forgot" class="view auth-view">
+<div class="auth-shell">
+  <div class="auth-hero" style="background:linear-gradient(175deg,#040d1a,#071525,#0d2847)">
+    <div class="hero-grid"></div>
+    <div class="hero-glow-1"></div>
+    <div class="elevator-shaft">
+      <div class="shaft-rail shaft-rail-l"></div><div class="shaft-rail shaft-rail-r"></div>
+      <div class="rope rope-1"></div><div class="rope rope-2"></div>
+      <div class="elevator-box" style="animation-duration:9s"><i class="bi bi-key"></i></div>
+      <div class="floor-mark floor-mark-1">B4</div><div class="floor-mark floor-mark-3">B12</div><div class="floor-mark floor-mark-5">G</div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-logo" style="background:linear-gradient(135deg,#059669,#047857)"><i class="bi bi-shield-lock"></i></div>
+      <div class="hero-brand">استعادة <span>الوصول</span></div>
+      <div class="hero-tagline" data-ar="سنرسل لك رابط الاستعادة فوراً" data-en="We'll send you a reset link instantly">سنرسل لك رابط الاستعادة فوراً</div>
+      <div style="margin-top:32px;padding:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px">
+        <div style="display:flex;flex-direction:column;gap:12px">
+          <div style="display:flex;gap:10px;align-items:flex-start"><i class="bi bi-1-circle-fill" style="color:var(--gold-300);font-size:18px;flex-shrink:0;margin-top:1px"></i><div style="font-size:13px;color:rgba(255,255,255,.65)" data-ar="أدخل بريدك الإلكتروني المسجل في النظام" data-en="Enter your registered email address">أدخل بريدك الإلكتروني المسجل في النظام</div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><i class="bi bi-2-circle-fill" style="color:var(--gold-300);font-size:18px;flex-shrink:0;margin-top:1px"></i><div style="font-size:13px;color:rgba(255,255,255,.65)" data-ar="افتح البريد وانقر على رابط الاستعادة" data-en="Open your email and click the reset link">افتح البريد وانقر على رابط الاستعادة</div></div>
+          <div style="display:flex;gap:10px;align-items:flex-start"><i class="bi bi-3-circle-fill" style="color:var(--gold-300);font-size:18px;flex-shrink:0;margin-top:1px"></i><div style="font-size:13px;color:rgba(255,255,255,.65)" data-ar="عيّن كلمة مرور جديدة وآمنة" data-en="Set a new secure password">عيّن كلمة مرور جديدة وآمنة</div></div>
+        </div>
+        <div style="margin-top:14px;padding-top:14px;border-top:1px solid rgba(255,255,255,.07);font-size:11.5px;color:rgba(255,255,255,.35)" data-ar="⏱ الرابط صالح لمدة 30 دقيقة فقط" data-en="⏱ The link expires in 30 minutes">⏱ الرابط صالح لمدة 30 دقيقة فقط</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-form-side">
+    <div class="lang-switcher-auth">
+      <button class="lang-pill active" onclick="setLang('ar')">عربي</button>
+      <button class="lang-pill" onclick="setLang('en')">English</button>
+    </div>
+    <div class="auth-form-box">
+      <button class="back-link" onclick="goView('v-login')"><i class="bi bi-arrow-right"></i> <span data-ar="العودة لتسجيل الدخول" data-en="Back to sign in">العودة لتسجيل الدخول</span></button>
+      <div class="form-eyebrow" style="background:var(--success-l);color:#065f46"><i class="bi bi-envelope-check"></i> <span data-ar="استعادة كلمة المرور" data-en="Password Recovery">استعادة كلمة المرور</span></div>
+      <h1 class="form-h1" data-ar="نسيت كلمة المرور؟" data-en="Forgot Password?">نسيت كلمة المرور؟</h1>
+      <p class="form-sub" data-ar="أدخل بريدك الإلكتروني وسنرسل لك رابط الاستعادة" data-en="Enter your email and we'll send you a reset link">أدخل بريدك الإلكتروني وسنرسل لك رابط الاستعادة</p>
+
+      <div id="forgot-alert" style="display:none"></div>
+
+      <form onsubmit="handleForgot(event)" novalidate>
+        <div class="f-group">
+          <label class="f-label" data-ar="البريد الإلكتروني" data-en="Email Address">البريد الإلكتروني</label>
+          <div class="f-wrap">
+            <input class="f-input" type="email" id="f-email" placeholder="email@@example.com">
+            <i class="bi bi-envelope f-icon"></i>
+          </div>
+        </div>
+        <button type="submit" class="btn-submit" id="forgot-btn" style="background:linear-gradient(135deg,#065f46,var(--success))">
+          <div class="spin"></div>
+          <span class="btn-txt"><i class="bi bi-send"></i> <span data-ar="إرسال رابط الاستعادة" data-en="Send Reset Link">إرسال رابط الاستعادة</span></span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     ▌ VIEW: RESET PASSWORD
+═══════════════════════════════════════════════════ -->
+<div id="v-reset" class="view auth-view">
+<div class="auth-shell">
+  <div class="auth-hero" style="background:linear-gradient(175deg,#040d1a,#1e1040,#2d1060)">
+    <div class="hero-grid"></div>
+    <div class="elevator-shaft">
+      <div class="shaft-rail shaft-rail-l"></div><div class="shaft-rail shaft-rail-r"></div>
+      <div class="rope rope-1"></div><div class="rope rope-2"></div>
+      <div class="elevator-box" style="animation-duration:5s"><i class="bi bi-shield-lock"></i></div>
+      <div class="floor-mark floor-mark-2">B8</div><div class="floor-mark floor-mark-4">B20</div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-logo" style="background:linear-gradient(135deg,var(--purple),#5b21b6)"><i class="bi bi-key-fill"></i></div>
+      <div class="hero-brand">كلمة مرور <span>جديدة</span></div>
+      <div class="hero-tagline" data-ar="اختر كلمة مرور قوية وفريدة" data-en="Choose a strong and unique password">اختر كلمة مرور قوية وفريدة</div>
+      <div style="margin-top:32px;padding:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.08);border-radius:14px">
+        <div style="font-size:11px;color:rgba(255,255,255,.4);margin-bottom:12px;letter-spacing:.5px;font-weight:600" data-ar="متطلبات كلمة المرور" data-en="PASSWORD REQUIREMENTS">متطلبات كلمة المرور</div>
+        <div style="display:flex;flex-direction:column;gap:9px">
+          <div style="display:flex;gap:9px;align-items:center;font-size:12.5px;color:rgba(255,255,255,.6)"><i class="bi bi-check-circle-fill" style="color:var(--gold-300);font-size:14px;flex-shrink:0"></i> <span data-ar="8 أحرف على الأقل" data-en="At least 8 characters">8 أحرف على الأقل</span></div>
+          <div style="display:flex;gap:9px;align-items:center;font-size:12.5px;color:rgba(255,255,255,.6)"><i class="bi bi-check-circle-fill" style="color:var(--gold-300);font-size:14px;flex-shrink:0"></i> <span data-ar="حرف كبير وحرف صغير" data-en="Upper & lowercase letters">حرف كبير وحرف صغير</span></div>
+          <div style="display:flex;gap:9px;align-items:center;font-size:12.5px;color:rgba(255,255,255,.6)"><i class="bi bi-check-circle-fill" style="color:var(--gold-300);font-size:14px;flex-shrink:0"></i> <span data-ar="رقم واحد على الأقل" data-en="At least one number">رقم واحد على الأقل</span></div>
+          <div style="display:flex;gap:9px;align-items:center;font-size:12.5px;color:rgba(255,255,255,.6)"><i class="bi bi-check-circle-fill" style="color:var(--gold-300);font-size:14px;flex-shrink:0"></i> <span data-ar="رمز خاص مثل @@#$" data-en="Special character like @@#$">رمز خاص مثل @@#$</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="auth-form-side">
+    <div class="lang-switcher-auth">
+      <button class="lang-pill active" onclick="setLang('ar')">عربي</button>
+      <button class="lang-pill" onclick="setLang('en')">English</button>
+    </div>
+    <div class="auth-form-box">
+      <button class="back-link" onclick="goView('v-login')"><i class="bi bi-arrow-right"></i> <span data-ar="العودة لتسجيل الدخول" data-en="Back to sign in">العودة لتسجيل الدخول</span></button>
+      <div class="form-eyebrow" style="background:var(--purple-l);color:#4c1d95"><i class="bi bi-lock-fill"></i> <span data-ar="تعيين كلمة مرور جديدة" data-en="Reset Password">تعيين كلمة مرور جديدة</span></div>
+      <h1 class="form-h1" data-ar="تعيين كلمة مرور جديدة" data-en="Reset Your Password">تعيين كلمة مرور جديدة</h1>
+      <p class="form-sub" data-ar="أدخل كلمة المرور الجديدة وتأكيدها" data-en="Enter and confirm your new password">أدخل كلمة المرور الجديدة وتأكيدها</p>
+
+      <div id="reset-alert" style="display:none"></div>
+
+      <form onsubmit="handleReset(event)" novalidate>
+        <div class="f-group">
+          <label class="f-label" data-ar="كلمة المرور الجديدة" data-en="New Password">كلمة المرور الجديدة</label>
+          <div class="f-wrap">
+            <input class="f-input" type="password" id="r-pass1" placeholder="••••••••" style="padding-left:44px" oninput="checkStrength(this.value)">
+            <i class="bi bi-lock f-icon"></i>
+            <button type="button" class="f-eye" onclick="togglePwd('r-pass1',this)"><i class="bi bi-eye-slash"></i></button>
+          </div>
+        </div>
+
+        <div class="strength-wrap">
+          <div class="strength-bars">
+            <div class="strength-bar" id="sb1"></div>
+            <div class="strength-bar" id="sb2"></div>
+            <div class="strength-bar" id="sb3"></div>
+            <div class="strength-bar" id="sb4"></div>
+          </div>
+          <div class="strength-lbl" id="strength-lbl"></div>
+        </div>
+
+        <div class="f-group">
+          <label class="f-label" data-ar="تأكيد كلمة المرور" data-en="Confirm Password">تأكيد كلمة المرور</label>
+          <div class="f-wrap">
+            <input class="f-input" type="password" id="r-pass2" placeholder="••••••••" style="padding-left:44px">
+            <i class="bi bi-lock-fill f-icon"></i>
+            <button type="button" class="f-eye" onclick="togglePwd('r-pass2',this)"><i class="bi bi-eye-slash"></i></button>
+          </div>
+        </div>
+
+        <button type="submit" class="btn-submit" id="reset-btn" style="background:linear-gradient(135deg,#4c1d95,var(--purple))">
+          <div class="spin"></div>
+          <span class="btn-txt"><i class="bi bi-shield-check"></i> <span data-ar="تعيين كلمة المرور" data-en="Reset Password">تعيين كلمة المرور</span></span>
+        </button>
+      </form>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     ▌ VIEW: DASHBOARD
+═══════════════════════════════════════════════════ -->
+<div id="v-dash" class="view dash-view">
+<div class="dash-shell">
+
+  <!-- Mobile overlay -->
+  <div class="mob-overlay" id="mob-overlay" onclick="closeSidebar()"></div>
+
+  <!-- ═══ SIDEBAR ═══ -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sb-brand">
+      <div class="sb-logo-mark"><i class="bi bi-building-up"></i></div>
+      <div class="sb-brand-text">
+        <div class="sb-brand-name">ليفت<span>برو</span></div>
+        <div class="sb-brand-ver" data-ar="نظام إدارة المصاعد v1.0" data-en="Elevator ERP v1.0">نظام إدارة المصاعد v1.0</div>
+      </div>
+    </div>
+
+    <nav class="sb-nav">
+      <div class="sb-group-label" data-ar="القائمة الرئيسية" data-en="MAIN">القائمة الرئيسية</div>
+      <div class="sb-item"><a class="sb-link active" href="#"><span class="sb-link-icon"><i class="bi bi-speedometer2"></i></span><span class="sb-link-txt" data-ar="لوحة التحكم" data-en="Dashboard">لوحة التحكم</span></a></div>
+
+      <div class="sb-group-label" data-ar="إدارة الأعمال" data-en="BUSINESS">إدارة الأعمال</div>
+      <div class="sb-item"><a class="sb-link" href="#"><span class="sb-link-icon"><i class="bi bi-folder2-open"></i></span><span class="sb-link-txt" data-ar="المشاريع" data-en="Projects">المشاريع</span><span class="sb-badge">8</span></a></div>
+      <div class="sb-item"><a class="sb-link" href="#"><span class="sb-link-icon"><i class="bi bi-file-earmark-text"></i></span><span class="sb-link-txt" data-ar="عروض الأسعار" data-en="Quotations">عروض الأسعار</span><span class="sb-badge">3</span></a></div>
+      <div class="sb-item"><a class="sb-link" href="#"><span class="sb-link-icon"><i class="bi bi-file-earmark-ruled"></i></span><span class="sb-link-txt" data-ar="العقود" data-en="Contracts">العقود</span></a></div>
+      <div class="sb-item"><a class="sb-link" href="#"><span class="sb-link-icon"><i class="bi bi-buildings"></i></span><span class="sb-link-txt" data-ar="العملاء" data-en="Clients">العملاء</span></a></div>
+
+      <div class="sb-group-label" data-ar="الإدارة المالية" data-en="FINANCE">الإدارة المالية</div>
+      <div class="sb-item"><a class="sb-link" href="#"><span class="sb-link-icon"><i class="bi bi-cash-coin"></i></span><span class="sb-link-txt" data-ar="الحسابات" data-en="Accounts">الحسابات</span><span class="sb-badge warn">5</span></a></div>
+      <div class="sb-item"><a class="sb-link" href="#"><span class="sb-link-icon"><i class="bi bi-receipt"></i></span><span class="sb-link-txt" data-ar="الفواتير" data-en="Invoices">الفواتير</span></a></div>
+
+      <div class="sb-group-label" data-ar="العمليات" data-en="OPERATIONS">العمليات</div>
+      <div class="sb-item"><a class="sb-link" href="#"><span class="sb-link-icon"><i class="bi bi-box-seam"></i></span><span class="sb-link-txt" data-ar="المستودع" data-en="Warehouse">المستودع</span><span class="sb-badge warn dot"></span></a></div>
+      <div class="sb-item"><a class="sb-link" href="#"><span class="sb-link-icon"><i class="bi bi-tools"></i></span><span class="sb-link-txt" data-ar="الصيانة" data-en="Maintenance">الصيانة</span></a></div>
+      <div class="sb-item"><a class="sb-link" href="#"><span class="sb-link-icon"><i class="bi bi-calendar-event"></i></span><span class="sb-link-txt" data-ar="الزيارات" data-en="Visits">الزيارات</span></a></div>
+      <div class="sb-item"><a class="sb-link" href="#"><span class="sb-link-icon"><i class="bi bi-clipboard-check"></i></span><span class="sb-link-txt" data-ar="المهام" data-en="Tasks">المهام</span></a></div>
+      <div class="sb-item"><a class="sb-link" href="#"><span class="sb-link-icon"><i class="bi bi-chat-left-text"></i></span><span class="sb-link-txt" data-ar="الشكاوى" data-en="Complaints">الشكاوى</span><span class="sb-badge">12</span></a></div>
+
+      <div class="sb-group-label" data-ar="الإعدادات" data-en="SETTINGS">الإعدادات</div>
+      <div class="sb-item"><a class="sb-link" href="#"><span class="sb-link-icon"><i class="bi bi-people"></i></span><span class="sb-link-txt" data-ar="المستخدمون" data-en="Users">المستخدمون</span></a></div>
+      <div class="sb-item"><a class="sb-link" href="#"><span class="sb-link-icon"><i class="bi bi-tags"></i></span><span class="sb-link-txt" data-ar="الأصناف" data-en="Items">الأصناف</span></a></div>
+      <div class="sb-item"><a class="sb-link" href="#"><span class="sb-link-icon"><i class="bi bi-gear"></i></span><span class="sb-link-txt" data-ar="الإعدادات" data-en="Settings">الإعدادات</span></a></div>
+    </nav>
+
+    <div class="sb-footer">
+      <div class="sb-user">
+        <div class="sb-avatar">أم</div>
+        <div class="sb-user-info">
+          <div class="sb-user-name" data-ar="أحمد محمد علي" data-en="Ahmed Mohamed Ali">أحمد محمد علي</div>
+          <div class="sb-user-role" data-ar="مدير النظام" data-en="System Admin">مدير النظام</div>
+        </div>
+        <button class="sb-logout" onclick="doLogout()" title="Sign Out"><i class="bi bi-box-arrow-right"></i></button>
+      </div>
+    </div>
+  </aside>
+
+  <!-- ═══ MAIN WRAP ═══ -->
+  <div class="main-wrap">
+
+    <!-- ── TOPBAR ── -->
+    <header class="topbar" id="topbar">
+      <button class="topbar-toggle" onclick="toggleSidebar()"><i class="bi bi-list"></i></button>
+
+      <nav class="topbar-breadcrumb">
+        <span class="bc-item"><i class="bi bi-house-door"></i></span>
+        <span class="bc-sep"><i class="bi bi-chevron-left"></i></span>
+        <span class="bc-active" data-ar="لوحة التحكم" data-en="Dashboard">لوحة التحكم</span>
+      </nav>
+
+      <div class="topbar-search d-none d-lg-block">
+        <i class="bi bi-search search-icon"></i>
+        <input type="text" id="global-search" placeholder="" data-ar-ph="بحث في النظام..." data-en-ph="Search system...">
+      </div>
+
+      <div class="tb-actions">
+        <!-- Notifications -->
+        <div class="dropdown">
+          <button class="tb-btn" data-bs-toggle="dropdown" aria-expanded="false">
+            <i class="bi bi-bell"></i>
+            <span class="tb-badge">7</span>
+          </button>
+          <div class="dropdown-menu dropdown-menu-end notif-dropdown">
+            <div class="notif-drop-head">
+              <span class="notif-drop-title" data-ar="الإشعارات (7 جديد)" data-en="Notifications (7 new)">الإشعارات (7 جديد)</span>
+              <button class="notif-mark-btn" data-ar="تعليم الكل مقروء" data-en="Mark all read">تعليم الكل مقروء</button>
+            </div>
+            <div class="notif-drop-list">
+              <div class="notif-row unread">
+                <div class="notif-icon" style="background:rgba(220,38,38,.1);color:var(--danger)"><i class="bi bi-exclamation-circle"></i></div>
+                <div class="notif-body">
+                  <div class="notif-title" data-ar="شكوى جديدة عاجلة — برج النيل، الطابق 14" data-en="Urgent complaint — Nile Tower, Floor 14">شكوى جديدة عاجلة — برج النيل، الطابق 14</div>
+                  <div class="notif-time"><i class="bi bi-clock"></i> منذ 8 دقائق</div>
                 </div>
-                <dl class="details">
-                    <div>
-                        <dt>Current floor</dt>
-                        <dd>@elevator.CurrentFloor</dd>
-                    </div>
-                    <div>
-                        <dt>Capacity</dt>
-                        <dd>@elevator.CapacityPercent%</dd>
-                    </div>
-                </dl>
-                <p class="inspection">@elevator.InspectionSummary</p>
-            </article>
-        }
-    </div>
-</section>
+                <div class="notif-dot"></div>
+              </div>
+              <div class="notif-row unread">
+                <div class="notif-icon" style="background:rgba(217,119,6,.1);color:var(--warning)"><i class="bi bi-cash-coin"></i></div>
+                <div class="notif-body">
+                  <div class="notif-title" data-ar="دفعة متأخرة — مشروع القاهرة الجديدة ₪120,000" data-en="Late payment — New Cairo Project ₪120,000">دفعة متأخرة — مشروع القاهرة الجديدة</div>
+                  <div class="notif-time"><i class="bi bi-clock"></i> منذ ساعتين</div>
+                </div>
+                <div class="notif-dot"></div>
+              </div>
+              <div class="notif-row unread">
+                <div class="notif-icon" style="background:rgba(30,84,168,.1);color:var(--navy-400)"><i class="bi bi-folder-plus"></i></div>
+                <div class="notif-body">
+                  <div class="notif-title" data-ar="مشروع جديد — أبراج الساحل الذهبي 8 مصاعد" data-en="New project — Golden Coast Towers 8 elevators">مشروع جديد — أبراج الساحل الذهبي</div>
+                  <div class="notif-time"><i class="bi bi-clock"></i> منذ 5 ساعات</div>
+                </div>
+                <div class="notif-dot"></div>
+              </div>
+              <div class="notif-row">
+                <div class="notif-icon" style="background:rgba(5,150,105,.1);color:var(--success)"><i class="bi bi-check-circle"></i></div>
+                <div class="notif-body">
+                  <div class="notif-title" data-ar="تم استلام دفعة ₪85,000 من شركة الفجر" data-en="Payment ₪85,000 received from Al-Fajr Co.">تم استلام دفعة ₪85,000 من شركة الفجر</div>
+                  <div class="notif-time"><i class="bi bi-clock"></i> أمس 16:30</div>
+                </div>
+              </div>
+              <div class="notif-row">
+                <div class="notif-icon" style="background:rgba(2,132,199,.1);color:var(--info)"><i class="bi bi-tools"></i></div>
+                <div class="notif-body">
+                  <div class="notif-title" data-ar="زيارة صيانة دورية غداً — برج المعرفة" data-en="Periodic maintenance tomorrow — Knowledge Tower">زيارة صيانة دورية غداً — برج المعرفة</div>
+                  <div class="notif-time"><i class="bi bi-clock"></i> أمس</div>
+                </div>
+              </div>
+            </div>
+            <div class="notif-footer"><a href="#" data-ar="عرض جميع الإشعارات ←" data-en="View all notifications →">عرض جميع الإشعارات ←</a></div>
+          </div>
+        </div>
 
-<section class="section metrics" id="maintenance">
-    <div class="section-heading">
-        <p class="eyebrow">Maintenance insights</p>
-        <h2>Service data built for quick decisions</h2>
-    </div>
+        <!-- Messages -->
+        <button class="tb-btn"><i class="bi bi-chat-dots"></i><span class="tb-badge info">3</span></button>
 
-    <div class="metric-grid">
-        @foreach (var metric in Model.Metrics)
-        {
-            <article class="metric-card">
-                <strong>@metric.Value</strong>
-                <h3>@metric.Label</h3>
-                <p>@metric.Description</p>
-            </article>
-        }
-    </div>
-</section>
+        <!-- Theme -->
+        <button class="tb-btn" onclick="toggleTheme()" id="theme-btn" title="Toggle Theme"><i class="bi bi-moon-stars"></i></button>
 
-<section class="section safety" id="safety">
-    <div>
-        <p class="eyebrow">Safety checklist</p>
-        <h2>Designed around reliable rides</h2>
-        <p>
-            The sample content highlights how an elevator operations site can communicate safety
-            practices to facilities teams, tenants, and visitors.
-        </p>
+        <!-- Language -->
+        <button class="tb-lang-btn" onclick="toggleLang()" id="lang-btn">EN</button>
+
+        <!-- Profile -->
+        <div class="dropdown">
+          <button class="tb-profile dropdown-toggle" data-bs-toggle="dropdown" style="border:none">
+            <div class="tb-profile-av">أم</div>
+            <div class="tb-profile-info d-none d-md-flex flex-column">
+              <span class="tb-profile-name" data-ar="أحمد محمد" data-en="Ahmed Mohamed">أحمد محمد</span>
+              <span class="tb-profile-role" data-ar="مدير النظام" data-en="System Admin">مدير النظام</span>
+            </div>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" style="min-width:200px">
+            <li><a class="dropdown-item" href="#"><i class="bi bi-person-circle me-2" style="color:var(--navy-400)"></i><span data-ar="الملف الشخصي" data-en="My Profile">الملف الشخصي</span></a></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-shield-check me-2" style="color:var(--success)"></i><span data-ar="الصلاحيات والأدوار" data-en="Permissions & Roles">الصلاحيات والأدوار</span></a></li>
+            <li><a class="dropdown-item" href="#"><i class="bi bi-gear me-2" style="color:var(--text-muted)"></i><span data-ar="إعدادات الحساب" data-en="Account Settings">إعدادات الحساب</span></a></li>
+            <li><hr class="dropdown-divider"></li>
+            <li><a class="dropdown-item" href="#" onclick="doLogout();return false;" style="color:var(--danger) !important"><i class="bi bi-box-arrow-right me-2"></i><span data-ar="تسجيل الخروج" data-en="Sign Out">تسجيل الخروج</span></a></li>
+          </ul>
+        </div>
+      </div>
+    </header>
+
+    <!-- ═══ CONTENT AREA ═══ -->
+    <main class="content-area">
+
+      <!-- Page Header -->
+      <div class="page-hd fade-up">
+        <div class="page-hd-left">
+          <h1 data-ar="لوحة التحكم الرئيسية" data-en="Main Dashboard">لوحة التحكم الرئيسية</h1>
+          <p data-ar="مرحباً أحمد — إليك ملخص شامل لأداء النظام اليوم" data-en="Welcome Ahmed — here's your comprehensive system performance summary">مرحباً أحمد — إليك ملخص شامل لأداء النظام اليوم</p>
+        </div>
+        <div class="page-hd-right">
+          <div class="date-badge"><i class="bi bi-calendar3"></i><span id="dash-date"></span></div>
+          <div class="dropdown">
+            <button class="hd-btn hd-btn-success dropdown-toggle" data-bs-toggle="dropdown"><i class="bi bi-download"></i><span data-ar="تصدير" data-en="Export">تصدير</span></button>
+            <ul class="dropdown-menu" style="font-size:13px">
+              <li><a class="dropdown-item" href="#"><i class="bi bi-file-pdf me-2" style="color:var(--danger)"></i>PDF</a></li>
+              <li><a class="dropdown-item" href="#"><i class="bi bi-file-earmark-excel me-2" style="color:var(--success)"></i>Excel</a></li>
+              <li><a class="dropdown-item" href="#"><i class="bi bi-printer me-2" style="color:var(--text-muted)"></i><span data-ar="طباعة" data-en="Print">طباعة</span></a></li>
+            </ul>
+          </div>
+          <button class="hd-btn hd-btn-primary" onclick="showToast('success','تحديث','تم تحديث البيانات بنجاح')"><i class="bi bi-arrow-clockwise"></i><span data-ar="تحديث" data-en="Refresh">تحديث</span></button>
+        </div>
+      </div>
+
+      <!-- ═══ 12 STAT CARDS ═══ -->
+      <div class="stats-grid" id="stats-grid">
+
+        <div class="stat-card fade-up d1" data-stat="proj-total" onclick="openStatPanel('proj-total',this)" style="--clr:#1e54a8">
+          <div class="sc-top"><div class="sc-icon-wrap"><i class="bi bi-folder2"></i></div><span class="sc-trend up"><i class="bi bi-arrow-up-short"></i>12%</span></div>
+          <div class="sc-val" data-count="148">0</div>
+          <div class="sc-label" data-ar="إجمالي المشاريع" data-en="Total Projects">إجمالي المشاريع</div>
+          <div class="sc-prog"><div class="sc-prog-fill" data-w="74"></div></div>
+          <div class="sc-footer"><span class="sc-footer-l" data-ar="هذا الشهر +6" data-en="This month +6">هذا الشهر +6</span><span class="sc-footer-r">74%</span></div>
+        </div>
+
+        <div class="stat-card fade-up d1" data-stat="proj-active" onclick="openStatPanel('proj-active',this)" style="--clr:#059669">
+          <div class="sc-top"><div class="sc-icon-wrap"><i class="bi bi-play-circle"></i></div><span class="sc-trend up"><i class="bi bi-arrow-up-short"></i>8%</span></div>
+          <div class="sc-val" data-count="42">0</div>
+          <div class="sc-label" data-ar="مشاريع نشطة" data-en="Active Projects">مشاريع نشطة</div>
+          <div class="sc-prog"><div class="sc-prog-fill" data-w="60"></div></div>
+          <div class="sc-footer"><span class="sc-footer-l" data-ar="قيد التنفيذ" data-en="In progress">قيد التنفيذ</span><span class="sc-footer-r">60%</span></div>
+        </div>
+
+        <div class="stat-card fade-up d1" data-stat="proj-done" onclick="openStatPanel('proj-done',this)" style="--clr:#0284c7">
+          <div class="sc-top"><div class="sc-icon-wrap"><i class="bi bi-check-circle"></i></div><span class="sc-trend up"><i class="bi bi-arrow-up-short"></i>18%</span></div>
+          <div class="sc-val" data-count="95">0</div>
+          <div class="sc-label" data-ar="مشاريع مكتملة" data-en="Completed Projects">مشاريع مكتملة</div>
+          <div class="sc-prog"><div class="sc-prog-fill" data-w="85"></div></div>
+          <div class="sc-footer"><span class="sc-footer-l" data-ar="حتى الآن" data-en="To date">حتى الآن</span><span class="sc-footer-r">85%</span></div>
+        </div>
+
+        <div class="stat-card fade-up d2" data-stat="proj-delayed" onclick="openStatPanel('proj-delayed',this)" style="--clr:#dc2626">
+          <div class="sc-top"><div class="sc-icon-wrap"><i class="bi bi-clock-history"></i></div><span class="sc-trend down"><i class="bi bi-arrow-down-short"></i>3%</span></div>
+          <div class="sc-val" data-count="11">0</div>
+          <div class="sc-label" data-ar="مشاريع متأخرة" data-en="Delayed Projects">مشاريع متأخرة</div>
+          <div class="sc-prog"><div class="sc-prog-fill" data-w="22"></div></div>
+          <div class="sc-footer"><span class="sc-footer-l" data-ar="تحتاج متابعة" data-en="Need attention">تحتاج متابعة</span><span class="sc-footer-r">22%</span></div>
+        </div>
+
+        <div class="stat-card fade-up d2" data-stat="clients" onclick="openStatPanel('clients',this)" style="--clr:#7c3aed">
+          <div class="sc-top"><div class="sc-icon-wrap"><i class="bi bi-buildings"></i></div><span class="sc-trend up"><i class="bi bi-arrow-up-short"></i>5%</span></div>
+          <div class="sc-val" data-count="312">0</div>
+          <div class="sc-label" data-ar="إجمالي العملاء" data-en="Total Clients">إجمالي العملاء</div>
+          <div class="sc-prog"><div class="sc-prog-fill" data-w="68"></div></div>
+          <div class="sc-footer"><span class="sc-footer-l" data-ar="نشط: 280" data-en="Active: 280">نشط: 280</span><span class="sc-footer-r">68%</span></div>
+        </div>
+
+        <div class="stat-card fade-up d2" data-stat="employees" onclick="openStatPanel('employees',this)" style="--clr:#d97706">
+          <div class="sc-top"><div class="sc-icon-wrap"><i class="bi bi-people"></i></div><span class="sc-trend flat"><i class="bi bi-dash"></i>0%</span></div>
+          <div class="sc-val" data-count="67">0</div>
+          <div class="sc-label" data-ar="إجمالي الموظفين" data-en="Total Employees">إجمالي الموظفين</div>
+          <div class="sc-prog"><div class="sc-prog-fill" data-w="92"></div></div>
+          <div class="sc-footer"><span class="sc-footer-l" data-ar="نشط: 62" data-en="Active: 62">نشط: 62</span><span class="sc-footer-r">92%</span></div>
+        </div>
+
+        <div class="stat-card fade-up d3" data-stat="revenue" onclick="openStatPanel('revenue',this)" style="--clr:#d4960a">
+          <div class="sc-top"><div class="sc-icon-wrap"><i class="bi bi-graph-up-arrow"></i></div><span class="sc-trend up"><i class="bi bi-arrow-up-short"></i>22%</span></div>
+          <div class="sc-val" style="font-size:19px">₪4.85M</div>
+          <div class="sc-label" data-ar="إجمالي الإيرادات" data-en="Total Revenue">إجمالي الإيرادات</div>
+          <div class="sc-prog"><div class="sc-prog-fill" data-w="82"></div></div>
+          <div class="sc-footer"><span class="sc-footer-l" data-ar="هذا العام" data-en="This year">هذا العام</span><span class="sc-footer-r">+22%</span></div>
+        </div>
+
+        <div class="stat-card fade-up d3" data-stat="outstanding" onclick="openStatPanel('outstanding',this)" style="--clr:#e11d48">
+          <div class="sc-top"><div class="sc-icon-wrap"><i class="bi bi-hourglass-split"></i></div><span class="sc-trend down"><i class="bi bi-arrow-down-short"></i>7%</span></div>
+          <div class="sc-val" style="font-size:19px">₪1.2M</div>
+          <div class="sc-label" data-ar="مدفوعات معلقة" data-en="Outstanding Payments">مدفوعات معلقة</div>
+          <div class="sc-prog"><div class="sc-prog-fill" data-w="35"></div></div>
+          <div class="sc-footer"><span class="sc-footer-l" data-ar="غير محصلة" data-en="Uncollected">غير محصلة</span><span class="sc-footer-r">35%</span></div>
+        </div>
+
+        <div class="stat-card fade-up d3" data-stat="invoices-paid" onclick="openStatPanel('invoices-paid',this)" style="--clr:#059669">
+          <div class="sc-top"><div class="sc-icon-wrap"><i class="bi bi-receipt-cutoff"></i></div><span class="sc-trend up"><i class="bi bi-arrow-up-short"></i>15%</span></div>
+          <div class="sc-val" data-count="284">0</div>
+          <div class="sc-label" data-ar="فواتير مدفوعة" data-en="Paid Invoices">فواتير مدفوعة</div>
+          <div class="sc-prog"><div class="sc-prog-fill" data-w="90"></div></div>
+          <div class="sc-footer"><span class="sc-footer-l" data-ar="هذا العام" data-en="This year">هذا العام</span><span class="sc-footer-r">90%</span></div>
+        </div>
+
+        <div class="stat-card fade-up d4" data-stat="invoices-delayed" onclick="openStatPanel('invoices-delayed',this)" style="--clr:#dc2626">
+          <div class="sc-top"><div class="sc-icon-wrap"><i class="bi bi-exclamation-triangle"></i></div><span class="sc-trend down"><i class="bi bi-arrow-up-short"></i>4%</span></div>
+          <div class="sc-val" data-count="23">0</div>
+          <div class="sc-label" data-ar="فواتير متأخرة" data-en="Delayed Invoices">فواتير متأخرة</div>
+          <div class="sc-prog"><div class="sc-prog-fill" data-w="15"></div></div>
+          <div class="sc-footer"><span class="sc-footer-l" data-ar="تحتاج تحصيل" data-en="Need collection">تحتاج تحصيل</span><span class="sc-footer-r">15%</span></div>
+        </div>
+
+        <div class="stat-card fade-up d4" data-stat="complaints" onclick="openStatPanel('complaints',this)" style="--clr:#7c3aed">
+          <div class="sc-top"><div class="sc-icon-wrap"><i class="bi bi-chat-left-text"></i></div><span class="sc-trend down"><i class="bi bi-arrow-down-short"></i>10%</span></div>
+          <div class="sc-val" data-count="34">0</div>
+          <div class="sc-label" data-ar="إجمالي الشكاوى" data-en="Total Complaints">إجمالي الشكاوى</div>
+          <div class="sc-prog"><div class="sc-prog-fill" data-w="40"></div></div>
+          <div class="sc-footer"><span class="sc-footer-l" data-ar="مفتوحة: 12" data-en="Open: 12">مفتوحة: 12</span><span class="sc-footer-r">-10%</span></div>
+        </div>
+
+        <div class="stat-card fade-up d4" data-stat="warehouse" onclick="openStatPanel('warehouse',this)" style="--clr:#d97706">
+          <div class="sc-top"><div class="sc-icon-wrap"><i class="bi bi-box-seam"></i></div><span class="sc-trend down"><i class="bi bi-arrow-up-short"></i>2</span></div>
+          <div class="sc-val" data-count="8">0</div>
+          <div class="sc-label" data-ar="تنبيهات المستودع" data-en="Stock Alerts">تنبيهات المستودع</div>
+          <div class="sc-prog"><div class="sc-prog-fill" data-w="20"></div></div>
+          <div class="sc-footer"><span class="sc-footer-l" data-ar="مخزون منخفض" data-en="Low stock">مخزون منخفض</span><span class="sc-footer-r">تنبيه!</span></div>
+        </div>
+      </div>
+
+      <!-- ═══ CHARTS ROW 1 ═══ -->
+      <div class="row g-3 mb-3 fade-up d1">
+        <div class="col-12 col-xl-8">
+          <div class="chart-card">
+            <div class="cc-head">
+              <div class="cc-head-title">
+                <div class="cc-head-icon" style="background:rgba(30,84,168,.1);color:var(--navy-400)"><i class="bi bi-bar-chart-line"></i></div>
+                <span data-ar="نظرة عامة على الإيرادات" data-en="Revenue Overview">نظرة عامة على الإيرادات</span>
+              </div>
+              <div class="cc-head-actions">
+                <button class="cc-filter-btn act" onclick="switchChart(this,'week')">أسبوع</button>
+                <button class="cc-filter-btn" onclick="switchChart(this,'month')">شهر</button>
+                <button class="cc-filter-btn" onclick="switchChart(this,'year')">سنة</button>
+              </div>
+            </div>
+            <div class="cc-body"><canvas id="rev-chart" height="110"></canvas></div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-xl-4">
+          <div class="chart-card">
+            <div class="cc-head">
+              <div class="cc-head-title">
+                <div class="cc-head-icon" style="background:rgba(124,58,237,.1);color:var(--purple)"><i class="bi bi-pie-chart"></i></div>
+                <span data-ar="حالة المشاريع" data-en="Projects Status">حالة المشاريع</span>
+              </div>
+            </div>
+            <div class="cc-body" style="display:flex;flex-direction:column;align-items:center;gap:14px">
+              <canvas id="proj-donut" width="180" height="180" style="max-width:180px"></canvas>
+              <div id="donut-legend" style="display:flex;flex-wrap:wrap;justify-content:center;gap:8px"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ CHARTS ROW 2 ═══ -->
+      <div class="row g-3 mb-3 fade-up d2">
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="chart-card">
+            <div class="cc-head">
+              <div class="cc-head-title">
+                <div class="cc-head-icon" style="background:rgba(2,132,199,.1);color:var(--info)"><i class="bi bi-boxes"></i></div>
+                <span data-ar="إحصاءات المستودع" data-en="Warehouse Stats">إحصاءات المستودع</span>
+              </div>
+            </div>
+            <div class="cc-body"><canvas id="wh-chart" height="175"></canvas></div>
+          </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4">
+          <div class="chart-card">
+            <div class="cc-head">
+              <div class="cc-head-title">
+                <div class="cc-head-icon" style="background:rgba(5,150,105,.1);color:var(--success)"><i class="bi bi-person-check"></i></div>
+                <span data-ar="أداء الموظفين" data-en="Employee Performance">أداء الموظفين</span>
+              </div>
+            </div>
+            <div class="cc-body"><canvas id="emp-chart" height="175"></canvas></div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-4">
+          <div class="chart-card">
+            <div class="cc-head">
+              <div class="cc-head-title">
+                <div class="cc-head-icon" style="background:rgba(220,38,38,.1);color:var(--danger)"><i class="bi bi-chat-left-dots"></i></div>
+                <span data-ar="تحليل الشكاوى" data-en="Complaints Analytics">تحليل الشكاوى</span>
+              </div>
+            </div>
+            <div class="cc-body"><canvas id="comp-chart" height="175"></canvas></div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ ACTIVITY + QUICK ACTIONS + SCHEDULE ═══ -->
+      <div class="row g-3 mb-3 fade-up d3">
+
+        <div class="col-12 col-xl-5">
+          <div class="panel-card">
+            <div class="panel-head">
+              <div class="panel-title"><i class="bi bi-activity" style="color:var(--navy-400)"></i><span data-ar="آخر الأنشطة" data-en="Recent Activities">آخر الأنشطة</span></div>
+              <a href="#" class="cc-view-all" data-ar="عرض الكل" data-en="View All">عرض الكل</a>
+            </div>
+            <ul class="act-list">
+              <li class="act-item">
+                <div class="act-ic" style="background:rgba(30,84,168,.1);color:var(--navy-400)"><i class="bi bi-folder-plus"></i></div>
+                <div class="act-body"><div class="act-txt" data-ar="مشروع جديد — برج الأندلس (4 مصاعد)" data-en="New project — Andalus Tower (4 elevators)">مشروع جديد — برج الأندلس (4 مصاعد)</div><div class="act-meta"><span class="chip chip-active" data-ar="نشط" data-en="Active">نشط</span></div></div>
+                <div class="act-time">10:42</div>
+              </li>
+              <li class="act-item">
+                <div class="act-ic" style="background:rgba(5,150,105,.1);color:var(--success)"><i class="bi bi-cash-stack"></i></div>
+                <div class="act-body"><div class="act-txt" data-ar="دفعة مستلمة ₪85,000 — شركة الفجر" data-en="Payment ₪85,000 — Al-Fajr Co.">دفعة مستلمة ₪85,000 — شركة الفجر</div><div class="act-meta"><span class="chip chip-done" data-ar="مكتمل" data-en="Done">مكتمل</span></div></div>
+                <div class="act-time">09:15</div>
+              </li>
+              <li class="act-item">
+                <div class="act-ic" style="background:rgba(220,38,38,.1);color:var(--danger)"><i class="bi bi-exclamation-circle"></i></div>
+                <div class="act-body"><div class="act-txt" data-ar="شكوى جديدة — عطل كابينة الطابق 14" data-en="New complaint — Cabin fault floor 14">شكوى جديدة — عطل كابينة الطابق 14</div><div class="act-meta"><span class="chip chip-pending" data-ar="قيد المعالجة" data-en="Pending">قيد المعالجة</span></div></div>
+                <div class="act-time">08:30</div>
+              </li>
+              <li class="act-item">
+                <div class="act-ic" style="background:rgba(217,119,6,.1);color:var(--warning)"><i class="bi bi-file-earmark-text"></i></div>
+                <div class="act-body"><div class="act-txt" data-ar="عرض سعر صادر — مشروع مدينة نصر" data-en="Quotation sent — Nasr City Project">عرض سعر صادر — مشروع مدينة نصر</div><div class="act-meta"><span class="chip chip-pending" data-ar="بانتظار الرد" data-en="Awaiting reply">بانتظار الرد</span></div></div>
+                <div class="act-time">أمس</div>
+              </li>
+              <li class="act-item">
+                <div class="act-ic" style="background:rgba(2,132,199,.1);color:var(--info)"><i class="bi bi-clipboard-check"></i></div>
+                <div class="act-body"><div class="act-txt" data-ar="مهمة منجزة — تركيب مصعد وحدة B3" data-en="Task done — Unit B3 elevator installed">مهمة منجزة — تركيب مصعد وحدة B3</div><div class="act-meta"><span class="chip chip-done" data-ar="منجز" data-en="Done">منجز</span></div></div>
+                <div class="act-time">أمس</div>
+              </li>
+              <li class="act-item">
+                <div class="act-ic" style="background:rgba(124,58,237,.1);color:var(--purple)"><i class="bi bi-tools"></i></div>
+                <div class="act-body"><div class="act-txt" data-ar="زيارة صيانة دورية — برج المعرفة" data-en="Periodic visit — Knowledge Tower">زيارة صيانة دورية — برج المعرفة</div><div class="act-meta"><span class="chip chip-active" data-ar="مجدول" data-en="Scheduled">مجدول</span></div></div>
+                <div class="act-time">أمس</div>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="col-12 col-xl-7">
+          <div class="row g-3">
+            <!-- Quick Actions -->
+            <div class="col-12">
+              <div class="panel-card">
+                <div class="panel-head">
+                  <div class="panel-title"><i class="bi bi-lightning-charge" style="color:var(--gold-400)"></i><span data-ar="إجراءات سريعة" data-en="Quick Actions">إجراءات سريعة</span></div>
+                </div>
+                <div class="qa-grid">
+                  <button class="qa-card" onclick="showToast('success','مشروع جديد','تم فتح نموذج إضافة مشروع')"><i class="bi bi-folder-plus" style="color:var(--navy-400)"></i><span data-ar="مشروع جديد" data-en="New Project">مشروع جديد</span></button>
+                  <button class="qa-card" onclick="showToast('success','إضافة عميل','تم فتح نموذج العميل')"><i class="bi bi-person-plus" style="color:var(--purple)"></i><span data-ar="إضافة عميل" data-en="Add Client">إضافة عميل</span></button>
+                  <button class="qa-card" onclick="showToast('success','عرض سعر','تم فتح نموذج عرض السعر')"><i class="bi bi-file-earmark-plus" style="color:var(--gold-400)"></i><span data-ar="عرض سعر" data-en="Quotation">عرض سعر</span></button>
+                  <button class="qa-card" onclick="showToast('info','فاتورة','تم فتح نموذج الفاتورة')"><i class="bi bi-receipt" style="color:var(--success)"></i><span data-ar="فاتورة جديدة" data-en="New Invoice">فاتورة جديدة</span></button>
+                  <button class="qa-card" onclick="showToast('warning','شكوى','تم فتح نموذج الشكوى')"><i class="bi bi-chat-left-text" style="color:var(--danger)"></i><span data-ar="شكوى جديدة" data-en="New Complaint">شكوى جديدة</span></button>
+                  <button class="qa-card" onclick="showToast('info','مهمة','تم فتح نموذج المهمة')"><i class="bi bi-plus-square" style="color:var(--info)"></i><span data-ar="إضافة مهمة" data-en="Add Task">إضافة مهمة</span></button>
+                </div>
+              </div>
+            </div>
+
+            <!-- Schedule -->
+            <div class="col-12">
+              <div class="panel-card">
+                <div class="panel-head">
+                  <div class="panel-title"><i class="bi bi-calendar-week" style="color:var(--navy-400)"></i><span data-ar="المواعيد القادمة" data-en="Upcoming Schedule">المواعيد القادمة</span></div>
+                  <a href="#" class="cc-view-all" data-ar="التقويم" data-en="Calendar">التقويم</a>
+                </div>
+                <div class="sch-list">
+                  <div class="sch-item" style="--clr:#1e54a8">
+                    <div class="sch-title" data-ar="زيارة صيانة — برج السلام (3 مصاعد)" data-en="Maintenance visit — Al-Salam Tower">زيارة صيانة — برج السلام</div>
+                    <div class="sch-meta"><i class="bi bi-clock"></i><span data-ar="غداً، 09:00 صباحاً" data-en="Tomorrow, 09:00 AM">غداً، 09:00 صباحاً</span><span>·</span><i class="bi bi-people"></i><span data-ar="محمود + 3 فنيين" data-en="Mahmoud + 3 technicians">محمود + 3 فنيين</span></div>
+                  </div>
+                  <div class="sch-item" style="--clr:#d97706">
+                    <div class="sch-title" data-ar="دفعة مستحقة — شركة النور ₪120,000" data-en="Payment due — Al-Noor Co. ₪120,000">دفعة مستحقة — شركة النور</div>
+                    <div class="sch-meta"><i class="bi bi-cash"></i><span>22 يناير 2026 — ₪120,000</span></div>
+                  </div>
+                  <div class="sch-item" style="--clr:#059669">
+                    <div class="sch-title" data-ar="اجتماع عميل — مشروع أبراج الساحل" data-en="Client meeting — Coastal Towers Project">اجتماع عميل — مشروع أبراج الساحل</div>
+                    <div class="sch-meta"><i class="bi bi-people"></i><span>25 يناير 2026 — 11:30 ص</span></div>
+                  </div>
+                  <div class="sch-item" style="--clr:#dc2626">
+                    <div class="sch-title" data-ar="موعد تسليم — تركيب مصعد وحدة C7" data-en="Delivery deadline — Unit C7 elevator">موعد تسليم — تركيب مصعد C7</div>
+                    <div class="sch-meta"><i class="bi bi-flag"></i><span>30 يناير 2026</span></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ═══ PROJECTS TABLE + SUMMARY ═══ -->
+      <div class="row g-3 mb-3 fade-up d4">
+        <div class="col-12 col-xl-8">
+          <div class="chart-card">
+            <div class="cc-head">
+              <div class="cc-head-title">
+                <div class="cc-head-icon" style="background:rgba(15,23,42,.06);color:var(--text-secondary)"><i class="bi bi-table"></i></div>
+                <span data-ar="أحدث المشاريع" data-en="Latest Projects">أحدث المشاريع</span>
+              </div>
+              <a href="#" class="cc-view-all" data-ar="عرض الكل" data-en="View All">عرض الكل</a>
+            </div>
+            <div style="overflow-x:auto">
+              <table class="proj-tbl">
+                <thead>
+                  <tr>
+                    <th data-ar="المشروع" data-en="Project">المشروع</th>
+                    <th data-ar="القيمة" data-en="Value">القيمة</th>
+                    <th data-ar="التقدم" data-en="Progress">التقدم</th>
+                    <th data-ar="الحالة" data-en="Status">الحالة</th>
+                    <th data-ar="التاريخ" data-en="Date">التاريخ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr><td><div class="proj-name-main" data-ar="برج الأندلس — 4 مصاعد" data-en="Andalus Tower — 4 elevators">برج الأندلس — 4 مصاعد</div><div class="proj-name-sub">شركة الأندلس للإنشاء</div></td><td style="font-weight:700;white-space:nowrap">₪480,000</td><td style="min-width:110px"><div class="prog-row"><div class="prog-track"><div class="prog-fill" style="width:65%;background:#1e54a8"></div></div><span class="prog-pct">65%</span></div></td><td><span class="chip chip-active" data-ar="نشط" data-en="Active">نشط</span></td><td style="font-size:11.5px;color:var(--text-muted);white-space:nowrap">15 يناير 2026</td></tr>
+                  <tr><td><div class="proj-name-main" data-ar="مجمع النور — 2 مصاعد" data-en="Al-Noor Complex — 2 elevators">مجمع النور — 2 مصاعد</div><div class="proj-name-sub">شركة النور للتطوير</div></td><td style="font-weight:700;white-space:nowrap">₪220,000</td><td style="min-width:110px"><div class="prog-row"><div class="prog-track"><div class="prog-fill" style="width:100%;background:#059669"></div></div><span class="prog-pct">100%</span></div></td><td><span class="chip chip-done" data-ar="مكتمل" data-en="Completed">مكتمل</span></td><td style="font-size:11.5px;color:var(--text-muted);white-space:nowrap">3 يناير 2026</td></tr>
+                  <tr><td><div class="proj-name-main" data-ar="فندق كراون — 6 مصاعد" data-en="Crown Hotel — 6 elevators">فندق كراون — 6 مصاعد</div><div class="proj-name-sub">كراون هوتيلز مصر</div></td><td style="font-weight:700;white-space:nowrap">₪950,000</td><td style="min-width:110px"><div class="prog-row"><div class="prog-track"><div class="prog-fill" style="width:30%;background:#dc2626"></div></div><span class="prog-pct">30%</span></div></td><td><span class="chip chip-delayed" data-ar="متأخر" data-en="Delayed">متأخر</span></td><td style="font-size:11.5px;color:var(--text-muted);white-space:nowrap">10 ديسمبر 2025</td></tr>
+                  <tr><td><div class="proj-name-main" data-ar="أبراج الساحل — 8 مصاعد" data-en="Coastal Towers — 8 elevators">أبراج الساحل — 8 مصاعد</div><div class="proj-name-sub">مجموعة الساحل العقارية</div></td><td style="font-weight:700;white-space:nowrap">₪1,400,000</td><td style="min-width:110px"><div class="prog-row"><div class="prog-track"><div class="prog-fill" style="width:48%;background:#1e54a8"></div></div><span class="prog-pct">48%</span></div></td><td><span class="chip chip-active" data-ar="نشط" data-en="Active">نشط</span></td><td style="font-size:11.5px;color:var(--text-muted);white-space:nowrap">5 يناير 2026</td></tr>
+                  <tr><td><div class="proj-name-main" data-ar="برج الأعمال الذكي — 3 مصاعد" data-en="Smart Business Tower — 3 elevators">برج الأعمال الذكي — 3 مصاعد</div><div class="proj-name-sub">شركة التقنية الذكية</div></td><td style="font-weight:700;white-space:nowrap">₪370,000</td><td style="min-width:110px"><div class="prog-row"><div class="prog-track"><div class="prog-fill" style="width:82%;background:#059669"></div></div><span class="prog-pct">82%</span></div></td><td><span class="chip chip-active" data-ar="نشط" data-en="Active">نشط</span></td><td style="font-size:11.5px;color:var(--text-muted);white-space:nowrap">8 يناير 2026</td></tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-12 col-xl-4">
+          <div class="row g-3">
+            <div class="col-6"><div class="sum-box" style="background:linear-gradient(135deg,var(--navy-800),var(--navy-500))"><div class="sum-box-icon"><i class="bi bi-file-earmark-text"></i></div><div class="sum-box-val">₪8.4M</div><div class="sum-box-lbl" data-ar="قيمة العقود الإجمالية" data-en="Total Contract Value">قيمة العقود الإجمالية</div><div class="sum-box-sub" data-ar="العقود النشطة" data-en="Active contracts">العقود النشطة</div></div></div>
+            <div class="col-6"><div class="sum-box" style="background:linear-gradient(135deg,#065f46,#059669)"><div class="sum-box-icon"><i class="bi bi-graph-up"></i></div><div class="sum-box-val">₪620K</div><div class="sum-box-lbl" data-ar="إيرادات هذا الشهر" data-en="Month Revenue">إيرادات هذا الشهر</div><div class="sum-box-sub">يناير 2026</div></div></div>
+            <div class="col-6"><div class="sum-box" style="background:linear-gradient(135deg,#991b1b,#dc2626)"><div class="sum-box-icon"><i class="bi bi-hourglass"></i></div><div class="sum-box-val">₪1.2M</div><div class="sum-box-lbl" data-ar="مدفوعات معلقة" data-en="Pending Payments">مدفوعات معلقة</div><div class="sum-box-sub" data-ar="غير محصلة" data-en="Uncollected">غير محصلة</div></div></div>
+            <div class="col-6"><div class="sum-box" style="background:linear-gradient(135deg,#4c1d95,#7c3aed)"><div class="sum-box-icon"><i class="bi bi-boxes"></i></div><div class="sum-box-val">2,847</div><div class="sum-box-lbl" data-ar="مواد المستودع" data-en="Warehouse Items">مواد المستودع</div><div class="sum-box-sub" data-ar="إجمالي الأصناف" data-en="Total items">إجمالي الأصناف</div></div></div>
+            <div class="col-12">
+              <div class="sum-box" style="background:linear-gradient(135deg,#92400e,#d97706);padding:16px">
+                <div style="display:flex;align-items:center;justify-content:space-between;position:relative;z-index:1">
+                  <div><div class="sum-box-icon"><i class="bi bi-tools"></i></div><div class="sum-box-val" style="font-size:28px">47</div><div class="sum-box-lbl" data-ar="زيارة صيانة هذا الشهر" data-en="Maintenance visits this month">زيارة صيانة هذا الشهر</div><div class="sum-box-sub" data-ar="من أصل 52 مجدولة" data-en="of 52 scheduled">من أصل 52 مجدولة</div></div>
+                  <i class="bi bi-buildings" style="font-size:54px;opacity:.15;position:relative;z-index:1"></i>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="dash-footer">
+      <span>© 2026 <strong>ليفت برو ERP</strong> — <span data-ar="نظام إدارة المصاعد المتكامل. جميع الحقوق محفوظة" data-en="Integrated Elevator Management System. All rights reserved">نظام إدارة المصاعد المتكامل. جميع الحقوق محفوظة</span></span>
+      <div class="footer-online"><div class="online-dot"></div><span data-ar="النظام يعمل بشكل طبيعي" data-en="System operational">النظام يعمل بشكل طبيعي</span> · v1.0.0</div>
+    </footer>
+  </div><!-- /main-wrap -->
+</div><!-- /dash-shell -->
+</div><!-- /v-dash -->
+
+<!-- Toast dock -->
+<div class="toast-dock" id="toast-dock"></div>
+
+<!-- ═══════════════════════════════════════════════
+     STAT QUICK-ACCESS PANEL (slide-in drawer)
+═══════════════════════════════════════════════ -->
+<div class="stat-panel-overlay" id="statOverlay" onclick="closeStatPanel()"></div>
+<aside class="stat-panel" id="statPanel" role="dialog" aria-modal="true">
+  <div class="sp-head" id="spHead">
+    <div class="sp-head-color-bar" id="spColorBar"></div>
+    <div class="sp-head-icon" id="spIcon"></div>
+    <div class="sp-head-info">
+      <div class="sp-head-num" id="spNum"></div>
+      <div class="sp-head-lbl" id="spLbl"></div>
     </div>
-    <ul>
-        @foreach (var highlight in Model.SafetyHighlights)
-        {
-            <li>@highlight</li>
-        }
-    </ul>
-</section>
+    <button class="sp-head-close" onclick="closeStatPanel()" aria-label="close"><i class="bi bi-x"></i></button>
+  </div>
+  <div class="sp-body" id="spBody"></div>
+  <div class="sp-foot" id="spFoot">
+    <button class="sp-foot-btn sp-foot-btn-out" onclick="closeStatPanel()"><i class="bi bi-x"></i><span id="spFootClose">إغلاق</span></button>
+    <button class="sp-foot-btn sp-foot-btn-prim" id="spFootAction"><i class="bi bi-arrow-left" id="spFootIcon"></i><span id="spFootLabel">عرض الكل</span></button>
+  </div>
+</aside>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="~/js/liftpro.js" asp-append-version="true"></script>
+}

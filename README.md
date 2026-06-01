@@ -1,6 +1,6 @@
 # ElevatorWeb
 
-ElevatorWeb is an ASP.NET Core 8 Razor Pages sample project about elevator operations. It presents a simple dashboard for fleet status, maintenance metrics, and safety highlights.
+ElevatorWeb is an ASP.NET Core 8 Razor Pages sample project about elevator operations. It presents a simple dashboard for fleet status, maintenance metrics, safety highlights, and employee permission assignments.
 
 ## Project structure
 
@@ -8,6 +8,7 @@ ElevatorWeb is an ASP.NET Core 8 Razor Pages sample project about elevator opera
 - `ElevatorWeb/` - ASP.NET Core 8 web application.
 - `ElevatorWeb/Pages/` - Razor Pages UI and page model content.
 - `ElevatorWeb/wwwroot/css/site.css` - Application styling.
+- `ElevatorWeb/Pages/Permissions.cshtml` - AspNet user, employee, and permission dashboard.
 
 ## Run locally
 

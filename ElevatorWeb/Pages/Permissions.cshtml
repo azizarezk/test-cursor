@@ -1,0 +1,120 @@
+@page
+@model ElevatorWeb.Pages.PermissionsModel
+@{
+    ViewData["Title"] = "Users and Permissions";
+}
+
+<section class="section permission-hero">
+    <p class="eyebrow">Access control</p>
+    <h1>AspNet users, employees, and elevator permissions</h1>
+    <p class="hero-copy">
+        Connect ASP.NET-style user accounts to employee profiles so building teams can see who
+        can monitor, operate, maintain, and administer elevator workflows.
+    </p>
+</section>
+
+<section class="section permission-summary">
+    <article class="directory-card">
+        <span class="summary-number">@Model.Assignments.Count</span>
+        <h2>Employee users</h2>
+        <p>Employees mapped to AspNet user accounts for elevator operations.</p>
+    </article>
+    <article class="directory-card">
+        <span class="summary-number">@Model.Permissions.Count</span>
+        <h2>Permissions</h2>
+        <p>Named permissions available to roles and employee assignments.</p>
+    </article>
+    <article class="directory-card">
+        <span class="summary-number">@(Model.Assignments.Count(assignment => assignment.CanAdminister))</span>
+        <h2>Administrators</h2>
+        <p>Employees allowed to manage permission assignments.</p>
+    </article>
+</section>
+
+<section class="section" id="employee-permissions">
+    <div class="section-heading">
+        <p class="eyebrow">Employee directory</p>
+        <h2>Assigned user permissions</h2>
+    </div>
+
+    <div class="permission-grid">
+        @foreach (var assignment in Model.Assignments)
+        {
+            <article class="permission-card">
+                <div class="card-header">
+                    <div>
+                        <h3>@assignment.Employee.FullName</h3>
+                        <p>@assignment.Employee.JobTitle</p>
+                    </div>
+                    <span class="status-pill status-blue">@assignment.User.Role</span>
+                </div>
+
+                <dl class="user-details">
+                    <div>
+                        <dt>AspNet user</dt>
+                        <dd>@assignment.User.UserName</dd>
+                    </div>
+                    <div>
+                        <dt>Email</dt>
+                        <dd>@assignment.User.Email</dd>
+                    </div>
+                    <div>
+                        <dt>Employee ID</dt>
+                        <dd>@assignment.Employee.EmployeeNumber</dd>
+                    </div>
+                    <div>
+                        <dt>Shift</dt>
+                        <dd>@assignment.Employee.Shift</dd>
+                    </div>
+                    <div>
+                        <dt>Elevator scope</dt>
+                        <dd>@assignment.Employee.AssignedElevatorBank</dd>
+                    </div>
+                    <div>
+                        <dt>Account status</dt>
+                        <dd>@(assignment.User.EmailConfirmed ? "Confirmed" : "Pending confirmation")</dd>
+                    </div>
+                </dl>
+
+                <div class="permission-list" aria-label="Permissions for @assignment.Employee.FullName">
+                    @foreach (var permission in assignment.Permissions)
+                    {
+                        <span class="permission-chip level-@permission.Level.ToString().ToLowerInvariant()">@permission.Name</span>
+                    }
+                </div>
+                <p class="inspection">@assignment.User.LastSignInSummary</p>
+            </article>
+        }
+    </div>
+</section>
+
+<section class="section permission-matrix" id="permissions">
+    <div class="section-heading">
+        <p class="eyebrow">Permission catalog</p>
+        <h2>Available elevator permissions</h2>
+    </div>
+
+    <div class="table-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Permission code</th>
+                    <th>Name</th>
+                    <th>Level</th>
+                    <th>Description</th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var permission in Model.Permissions)
+                {
+                    <tr>
+                        <td><code>@permission.Code</code></td>
+                        <td>@permission.Name</td>
+                        <td>@permission.Level</td>
+                        <td>@permission.Description</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</section>
